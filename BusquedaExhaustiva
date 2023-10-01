@@ -1,4 +1,4 @@
-//Codigo desarrollado en Java.
+//Codigo desarrollado en Java. 
 public class BusquedaExhaustiva {
     public static void main(String[] args) {
         int numAutos = 4; // Número de autos disponibles
