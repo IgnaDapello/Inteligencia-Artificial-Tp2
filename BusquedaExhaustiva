@@ -1,0 +1,48 @@
+public class BusquedaExhaustiva {
+    public static void main(String[] args) {
+        int numAutos = 4; // Número de autos disponibles
+        boolean[] asignacionOptima = new boolean[numAutos]; // Array para almacenar la asignación óptima de autos
+        int maxCargados = buscarAsignacionOptima(numAutos, asignacionOptima); // Llama a la función de búsqueda
+        
+        System.out.println("Asignación óptima de autos:");
+        for (int i = 0; i < numAutos; i++) {
+            if (asignacionOptima[i]) {
+                System.out.println("Auto " + (char)('A' + i) + " cargando"); // Muestra el estado de carga de cada auto
+            } else {
+                System.out.println("Auto " + (char)('A' + i) + " no cargando"); // Se muestra el estado de no carga de cada auto
+            }
+        }
+        
+        System.out.println("Cantidad máxima de autos cargados: " + maxCargados); // Se muestra la cantidad máxima de autos cargados
+    }
+
+    public static int buscarAsignacionOptima(int numAutos, boolean[] asignacion) {
+        int maxCargados = 0; // Almacena la cantidad máxima de autos cargados
+        boolean[] mejorAsignacion = new boolean[numAutos]; // Almacena la mejor asignación encontrada hasta el momento
+        
+        // Bucle para probar todas las posibles asignaciones de autos
+        for (int i = 0; i < (1 << numAutos); i++) {
+            int cargados = 0; // Contador para llevar el registro de autos cargados en la asignación actual
+            boolean[] asignacionActual = new boolean[numAutos]; // Almacena la asignación actual
+            
+            // Bucle para asignar autos según el valor de 'i'
+            for (int j = 0; j < numAutos; j++) {
+                if ((i & (1 << j)) != 0) {
+                    asignacionActual[j] = true; // Marca el auto como cargado en la asignación actual
+                    cargados++; // Incrementa el contador de autos cargados
+                }
+            }
+            
+            // Verificamos si la asignación actual es mejor que la mejor conocida
+            if (cargados > maxCargados) {
+                maxCargados = cargados; // Actualiza la cantidad máxima de autos cargados
+                System.arraycopy(asignacionActual, 0, mejorAsignacion, 0, numAutos); // Copia la asignación actual como la mejor conocida
+            }
+        }
+        
+        // Copiamos la asignación óptima encontrada a la variable 'asignacion' que se pasa por referencia
+        System.arraycopy(mejorAsignacion, 0, asignacion, 0, numAutos);
+        
+        return maxCargados; // Devuelve la cantidad máxima de autos cargados
+    }
+}
