@@ -1,0 +1,48 @@
+Desarrollado en java.
+import java.util.Random; //libreria para generar numeros aleatorios
+
+public class BusquedaHeuristica {
+    public static void main(String[] args) {
+        // Simulación de un MMORPG con acciones disponibles
+        int experienciaActual = 0;
+        int nivelActual = 1;
+
+        while (nivelActual < 10) { // Simulamos hasta llegar al nivel 10
+            // Seleccionar una acción usando una heurística simple
+            int accion = seleccionarAccion();
+
+            // Ejecutar la acción y actualizar la experiencia y el nivel
+            if (accion == 1) {
+                experienciaActual += 100; // Ganar experiencia al derrotar enemigos
+            } else if (accion == 2) {
+                experienciaActual += 50; // Ganar experiencia al completar misiones
+            } else if (accion == 3) {
+                experienciaActual += 20; // Descansar para recuperar recursos
+            } else if (accion == 4) {
+                experienciaActual += 75; // Explorar un laberinto
+            } else {
+                experienciaActual += 30; // Realizar una transaccion en el juego
+            }
+
+            // Verificar si subimos de nivel
+            if (experienciaActual >= 100 * nivelActual) {
+                nivelActual++;
+                System.out.println("¡Has subido al nivel " + nivelActual + "!");
+            }
+
+            // Simular un tiempo de espera antes de la próxima acción
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // Ejemplo simple de heurística de selección de acciones
+    public static int seleccionarAccion() {
+        Random rand = new Random();
+        int valorAleatorio = rand.nextInt(5); // 5 acciones posibles
+        return valorAleatorio + 1; // Devolvemos un número entre 1 y 5
+    }
+}
